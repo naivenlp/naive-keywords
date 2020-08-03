@@ -2,6 +2,8 @@ import abc
 import logging
 import os
 
+from typing import List
+
 import jieba
 
 
@@ -107,6 +109,10 @@ class TokenConcatenater(AbstractConcatenater):
                 results.append(stack.pop(0))
             results.append(prev)
             stack.append(cur)
+
+        while stack:
+            results.append(stack.pop(0))
+
         return results
 
 
@@ -127,7 +133,20 @@ class JiebaTokenizer(AbstractTokenizer):
         self.user_dicts = user_dicts or []
         self.spliter = spliter
         self.concater = concater
-        self.do_lower_case
+        self.do_lower_case = do_lower_case
+
+    def force_split(self, token):
+        tokens = token.split()
+        if len(tokens) < 2:
+            return
+        from_token = ''.join(tokens)
+        self.spliter.add_split(from_token, token)
+
+    def force_concate(self, token):
+        token = token.strip()
+        if not token:
+            return
+        self.concater.add_concate(token)
 
     def _load_user_dict(self):
         if not self.user_dicts:
