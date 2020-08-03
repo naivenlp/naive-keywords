@@ -7,7 +7,7 @@ from .tokenizer import *
 class TokenizerTest(unittest.TestCase):
 
     def testJiebaTokenizer(self):
-        spliter = TokenSplitter()
+        spliter = TokenSpliter()
         concater = TokenConcatenater()
         tokenizer = JiebaTokenizer(spliter=spliter, concater=concater)
 

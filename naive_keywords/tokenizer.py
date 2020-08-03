@@ -13,7 +13,7 @@ class AbstractSpliter(abc.ABC):
         raise NotImplementedError()
 
 
-class TokenSplitter(AbstractSpliter):
+class TokenSpliter(AbstractSpliter):
 
     def __init__(self, split_dicts=None, sep='\t'):
         super().__init__()
